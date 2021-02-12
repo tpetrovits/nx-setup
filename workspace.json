@@ -1,0 +1,125 @@
+{
+  "version": 2,
+  "cli": {
+    "defaultCollection": "@nrwl/react"
+  },
+  "generators": {
+    "@nrwl/react": {
+      "application": {
+        "style": "styled-jsx",
+        "linter": "eslint",
+        "babel": true
+      },
+      "component": {
+        "style": "styled-jsx"
+      },
+      "library": {
+        "style": "styled-jsx",
+        "linter": "eslint"
+      }
+    }
+  },
+  "defaultProject": "react-setup",
+  "projects": {
+    "react-setup": {
+      "root": "apps/react-setup",
+      "sourceRoot": "apps/react-setup/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/web:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/react-setup",
+            "index": "apps/react-setup/src/index.html",
+            "main": "apps/react-setup/src/main.tsx",
+            "polyfills": "apps/react-setup/src/polyfills.ts",
+            "tsConfig": "apps/react-setup/tsconfig.app.json",
+            "assets": [
+              "apps/react-setup/src/favicon.ico",
+              "apps/react-setup/src/assets"
+            ],
+            "styles": [],
+            "scripts": [],
+            "webpackConfig": "@nrwl/react/plugins/webpack"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/react-setup/src/environments/environment.ts",
+                  "with": "apps/react-setup/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/web:dev-server",
+          "options": {
+            "buildTarget": "react-setup:build"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "react-setup:build:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/react-setup/**/*.{ts,tsx,js,jsx}"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/react-setup"],
+          "options": {
+            "jestConfig": "apps/react-setup/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "react-setup-e2e": {
+      "root": "apps/react-setup-e2e",
+      "sourceRoot": "apps/react-setup-e2e/src",
+      "projectType": "application",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/react-setup-e2e/cypress.json",
+            "tsConfig": "apps/react-setup-e2e/tsconfig.e2e.json",
+            "devServerTarget": "react-setup:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "react-setup:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/react-setup-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    }
+  }
+}
